@@ -1,16 +1,55 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html>
 <head>
+<title>Pilot Hero Page</title>
 <meta name="DERANGED ABOUT THE DREAM OF PILOT.." content="width=device-width, initial-scale=1.0">
 <style>
-  <p> CHENNAI
-  
 * {
   box-sizing: border-box;
 }
 .menu {
   float: left;
   width: 20%;
+  padding: 10px;
 }
 .menuitem {
   padding: 8px;
@@ -21,16 +60,18 @@
   float: left;
   width: 60%;
   padding: 0 20px;
-  overflow: hidden;
 }
 .right {
-  background-color:GREY;
-  float: RIGHT;
+  background-color: #d3d3d3;
+  float: right;
   width: 20%;
   padding: 10px 15px;
   margin-top: 7px;
 }
-
+form label {
+  display: inline-block;
+  width: 100px;
+}
 @media only screen and (max-width:800px) {
   /* For tablets: */
   .main {
@@ -49,63 +90,59 @@
 }
 </style>
 </head>
-<body style="font-family:Berlin Sans FB Demi;">
+<body style="font-family:Helvetica;">
 
-
-<div style="background-color:#cccccc;padding:15px;">
-  <h1>#NIBRAS_pilot's_DIARY.....</h1>
-  <h3>HISTORY OF A PILOT</h3>
+<div style="background-color:#e6e6e6;padding:15px;">
+  <h1>#NIBRAS_ASPIRING_PiLoT's_DIARY.....</h1>
+  <h3>A PILOT'S LEGACY</h3>
+  <p>CHENNAI, INDIA</p>
 </div>
 
 <div style="overflow:auto">
   <div class="menu">
-    <div class="menuitem">READ IT!</div>
-    <div class="menuitem">GET INSPIRED!!</div>
-    <div class="menuitem">THINK ON IT !!!</div>
-    <div class="menuitem">TAKE IT AS A ROLE MODEL AND ACHIEVE UR DESTINY!!!!</div>
+    <div class="menuitem">EXPLORE!</div>
+    <div class="menuitem">BE MOTIVATED!</div>
+    <div class="menuitem">REFLECT!</div>
+    <div class="menuitem">LET THIS INSPIRE YOUR JOURNEY!</div>
   </div>
 
   <div class="main">
-    <h2> MR.CHESLEY SULLY SULLENBERGER THE PILOT</h2>
-    <p>Chesley Burnett Sullenberger III (born 23 January 1951) is an American retired airline captain who, on January 15, 2009, landed US Airways Flight 1549 in the Hudson River off Manhattan after both engines were disabled by a bird strike; all 155 people aboard survived. Sullenberger is a speaker on airline safety[1] and has helped develop new protocols for airline safety. He served as the co-chairman, along with First Officer Jeffrey Skiles, of the EAA's Young Eagles youth introduction-to-aviation program from 2009 to 2013.[2]
-
-Sullenberger retired from US Airways after 30 years as a commercial pilot on March 3, 2010.[3] In May of the following year, Sullenberger was hired by CBS News as an Aviation and Safety Expert.</p>
-    <img src="pexels-photo-747079.jpg" style="width:100%">
+    <h2>CHESLEY SULLENBERGER: HEROIC PILOT</h2>
+    <p>Chesley Sullenberger III, born January 23, 1951, is a retired U.S. airline captain who safely landed US Airways Flight 1549 on the Hudson River on January 15, 2009, after a bird strike disabled both engines, saving all 155 passengers and crew. He advocates for aviation safety, contributing to new safety protocols. From 2009 to 2013, he co-chaired the EAA Young Eagles program with Jeffrey Skiles. Sullenberger retired from US Airways in 2010 after 30 years and later joined CBS News as an aviation safety expert.</p>
+    <p><a href="https://de.wikipedia.org/wiki/Chesley_Sullenberger">Chesley Sullenberger Wikipedia</a></p>
   </div>
 
   <div class="right">
-    <h2>OCCUPATION?</h2>
-    <p> *American retired airline captain
-        *Writer
-
-        *Fighter Pilot </p>
+    <h2>PROFESSION?</h2>
+    <p>- Retired Airline Captain<br>
+       - Author<br>
+       - Former Fighter Pilot</p>
     <h2>NATIONALITY?</h2>
-    <p>American.</p>
-    <h2>BORN?</h2>
-    <p>23 January 1951 (age 68 years), Denison, Texas, United States</p>
+    <p>United States</p>
+    <h2>BIRTH?</h2>
+    <p>January 23, 1951, Denison, Texas, USA</p>
   </div>
 </div>
-<h2>INFO BANK </h2>
-<p>The <strong>UNGAL SEVAI YENGALLUKKU TEVAI</p>
 
-<form action="">
-UR GOOD NAME:<br>
-<input type="text" name="userid">
-<br>
-UR CLASS:<br>
-<input type="TEXT" name="psw">
-COMMENTS:<br>
-<input type="text" name="userid">
-<input type="button" action="post">
+<h2>VISITOR FEEDBACK</h2>
+<p><strong>YOUR INPUT MATTERS TO US</strong></p>
+
+<p>Thank you for exploring this site! We hope it inspires you to create something even more amazing!</p>
+
+<form>
+  <label>YOUR NAME:</label><br>
+  <input type="text" name="name"><br>
+  <label>YOUR GRADE:</label><br>
+  <input type="text" name="grade"><br>
+  <label>FEEDBACK:</label><br>
+  <input type="text" name="feedback"><br>
+  <input type="button" value="Send">
 </form>
 <br>
 
-<p>                                              THANK U FOR VISITING THE SITE HOPE U GUYS ALSO TRY MAKING A THING LIKE THIS EVEN MORE BETTER.......</p>
+<div style="background-color:#e6e6e6;text-align:center;padding:10px;margin-top:10px;font-size:16px;">
+  This page honors the incredible courage of a pilot who risked everything to save 155 lives on board. Created by Nibras Hassan Nathu.
+</div>
 
 </body>
 </html>
-
-
-<div style="background-color:#cccccc;text-align:center;padding:10px;margin-top:10px;font-size:16px;"> THIS WEB PAGE WAS CREATED TO MAKE U GUYS AWARE OF HOW THIS GREAT MAM MADE AN EXTREME RISK TO SAVE THE LIFE OF 155 ON-BOARDED PASSENGERS INCLUDING THE STAFFS ......REMARKED BY NIBRAS.......</div>
-
-<p><strong>Note:</strong> The audio tag is not supported in Internet Explorer 8 and earlier versions.</p>
