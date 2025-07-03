@@ -1,1 +1,396 @@
+\documentclass[10pt, letterpaper]{article}
 
+% Packages:
+\usepackage[
+    ignoreheadfoot, 
+    top=2 cm, 
+    bottom=2 cm, 
+    left=2 cm, 
+    right=2 cm,
+    footskip=1.0 cm, 
+]{geometry} 
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 79, 144} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Nibras's CV},
+    pdfauthor={Nibras Hassan Nathu},
+    pdfcreator={LaTeX with Overleaf},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} 
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    % \usepackage[T1]{fontenc} % this breaks sb2nov
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+
+
+
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} 
+\pagestyle{empty} 
+\setcounter{secnumdepth}{0} 
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt} 
+\setlength{\columnsep}{0cm} 
+\makeatletter
+\let\ps@customFooterStyle\ps@plain 
+\patchcmd{\ps@customFooterStyle}{\thepage}{
+    \color{gray}\textit{\small Nibras Hassan - Page \thepage{} of \pageref*{LastPage}}
+}{}{} 
+\makeatother
+\pagestyle{customFooterStyle}
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\circ$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0.4 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} 
+
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0.2 cm + 0.00001 cm
+    }{
+        0.2 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+}
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} 
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} 
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0.2 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated on July 2025}\hspace{\widthof{Last updated on July,2025}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+
+    \placelastupdatedtext
+    \begin{header}
+        \textbf{\fontsize{24 pt}{24 pt}\selectfont Nibras Hassan Nathu}
+
+        \vspace{0.3 cm}
+
+        \normalsize
+        \mbox{{\color{black}\footnotesize\faMapMarker*}\hspace*{0.13cm}Warschauer Straße, 10243 Berlin (Germany) }%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{mailto:nibrashassan11@gmail.com}{\color{black}{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}nibrashassan11@gmail.com}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{tel:+4915210368191}{\color{black}{\footnotesize\faPhone*}\hspace*{0.13cm}+4915210368191}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://nibrashassan.github.io/NH-Portfolio/}{\color{black}{\footnotesize\faLink}\hspace*{0.13cm}https://nibrashassan.github.io/NH-Portfolio/}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/nibras-hassan-n}{\color{black}{\footnotesize\faLinkedinIn}\hspace*{0.13cm}nibras-hassan-n}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://github.com/nibrashassan/NH-Portfolio}{\color{black}{\footnotesize\faGithub}\hspace*{0.13cm}nibrashassan}}%
+    \end{header}
+
+    \vspace{0.3 cm - 0.3 cm}
+
+
+    \section{Profile}
+
+
+
+        
+        \begin{onecolentry}
+Highly motivated and skill-oriented Computer Science student, passionate about leveraging Science and Technology to drive innovation and cultivate an entrepreneurial mindset along with passionate interest to become a pilot and great interest in aviation too. Possessing strong analytical skills, I am eager to contribute to strategic decision-making. I demonstrate a proven ability to collaborate effectively within diverse teams and bring Success, coupled with exceptional learning agility and clear communication skills. My technical foundation includes learning proficiency in media softwares, MySQL, Python, MS Office suite database concepts, and data structures. Furthermore, I have had the pleasure of engaging with diverse cultures, fostering a pan-world understanding that I bring with enthusiasm to collaborative and innovate withing global context. With a foundational understanding of the Intelligent Enterprise, Media, E-Media resources, AI and its underlying technologies, I exhibit a strong aptitude for solution innovation. While developing my technical proficiency, I offer a blend of creative ideation, basic project management, and fundamental computer skills, aiming to contribute to scalable and repeatable solutions that support sales strategies. I am committed to rapidly acquiring new skills and applying my overall potential within the organization, contributing meaningfully to its purpose-driven mission. 
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+     
+
+
+    
+
+    \section{Education}
+
+
+
+        
+        \begin{twocolentry}{
+            \textit{Berlin,Germany}
+            
+        \textit{Oct 2024 – Ongoing}}
+            \textbf{Gisma University of Applied Sciences GmbH}
+
+            \textit{BS in Computer Science}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item \textbf{Coursework:} Computer Architecture, Programming, Software Dvp, Computational Theory, Project Mng, Research
+            \end{highlights}
+        \end{onecolentry}
+
+   
+        \vspace{0.2 cm}
+
+ \begin{twocolentry}{
+            \textit{Chennai,India}
+            
+        \textit{2022 – 2024}}
+            \textbf{Gateway International School}
+
+            \textit{Senior High School}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+         \begin{highlights}
+                \item Student Council Member as Student Relationship Leader ( School's Debut post )  
+                \itemNational Science Olympiad, School Level Gold Medalist
+                \item Lead Sports player - Shotput, Volleyball, Cricket 
+                \item Lead Speaker
+            \end{highlights}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item \textbf{Coursework:} Mathematics, Physics, Chemistry,Biology
+            \end{highlights}
+        \end{onecolentry}
+ 
+
+         \vspace{0.2 cm}
+
+
+          \begin{twocolentry}{
+            \textit{Chennai,India}
+            
+        \textit{2016 – 2022 }}
+            \textbf{Rishs International School  }
+
+            \textit{Junior High School}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+
+        \begin{highlights}
+                \item Student Council Member- 2018' Director of Interact Club- Rotary Club Guindy, House Captain; 2017' Deputy School Pupil Leader; 2016' Sports Secretary; Class Leader every year.  
+                \item Martial Arts- Silambam Lvl 2; Horse Riding; State Levl Badminton Player; Athletics 
+                \item Awarded as The Best RYLARIAN in an event of RYLA AWARDS. 
+                \item Lead Host and Performer in Cultural events; Drummer in School Band  
+            \end{highlights}
+            
+        \begin{onecolentry}
+            \begin{highlights}
+                \item \textbf{Coursework:} Mathematics, Science
+            \end{highlights}
+        \end{onecolentry}
+        
+
+
+    \section{Experience}
+
+
+
+        
+        \begin{twocolentry}{
+        \textit{Chennai,India}    
+            
+        \textit{2018 – 2020}}
+            \textbf{Director of the School}
+            
+            \textit{Interact Club- Rotary Club of Guindy }
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Led impactful campaigns on key social topics \& sociological events. 
+                \item Motivated participation in regional events \& workshops focused on social \& environmental practices (farming, social influencing, voluntary services).  
+                \item  Fostered engaged learning \& community service, promoting social responsibility. 
+                \item Achieved Best RYLARIAN AWARD (RYLA AWARDS) through team effort.  
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+     
+
+
+
+    
+
+
+
+    
+    \section{Projects}
+
+
+
+        
+        \begin{twocolentry}{
+            
+        \textit{2025-Progressing}
+        
+        \textit{\href{github.com/nibrashassan/NH-Portfolio}{github.com/nibrashassan}}}
+            \textbf{CS Experimentations}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Created Htmls, Websites
+                \item Tools Used: Html, CSS, JavaScript
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            
+        \textit{2018-Progressing}
+        \textit{\href{https://photos.google.com/share/AF1QipMBalSpq7sALnq4DjlCzQYre_0OTgJC8XbGEGMvGc-UDDwXom3wCisbLBRKcWi35Q?  key=ajlZay0tTDFsWFAyMjJpMWt0QUxpeXBiUldDOHR3 }{nhphotography.g-photos}}}
+            \textbf{Smartphone Photography as a Hobby}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item With great interest in photography I tag my interest as NH PHOTOGRAPHY. Having keen eye for detail and a vision to create images that resonate on a personal level, I am currently cultivating photographs using normal Smartphone Camera, and it is because capturing moments happens almost at any time and most of the time the Smartphone is with us – and I am delighted to share my visual narrative with you.  
+                \item Tools Used: Smartphone cam, Snapseed, Photoshop
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            
+        \textit{2020}
+        
+        \textit{\href{https://youtu.be/R5XMkfRKcWQ?si=G4tFcRwEmPYRIccR }{Yt-MangathaBulb}}}
+            \textbf{Youtube Video Production}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item I created a English-Tamil parody song video from scratch with my friends, one was the singer and lyricist and one helped me with my slow system processor and together tossed it onto YouTube. We were on a mission to tickle the funny bones of our classmates who were going absolutely bonkers with online classes during the lockdown. Think of it as a virtual dose of silliness to chase away those lockdown blues. We had a blast making it. This was the start of exploring Computer and Applications at 15 which added a skill of D.I.Y too. 
+                \item Tools Used: Filmora
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+    
+    \section{Skills}
+
+
+
+        
+        \begin{onecolentry}
+        \textbf{Digital:} Html, SQL, Python, MS Office Suite, Videography, Photography, Video/Photo Editing, Production Sound Mixer
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+         \begin{onecolentry}
+            \textbf{Languages:} English, German, Tamil, Hindi, Urdu, Kannada, Telugu, Arabic(Read)
+        \end{onecolentry}
+
+        
+
+    
+
+\end{document}
