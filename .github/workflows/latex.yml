@@ -17,18 +17,18 @@ jobs:
       - name: Compile LaTeX document
         run: |
           cd cv
-          pdflatex main.tex
-          bibtex cv  # Remove if no .bib file
-          pdflatex main.tex
-          pdflatex main.tex
+          pdflatex -jobname=nibrascv main.tex
+          bibtex nibrascv  # Remove if no .bib file
+          pdflatex -jobname=nibrascv main.tex
+          pdflatex -jobname=nibrascv main.tex
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
           name: CV
-          path: cv/nibras.pdf
+          path: cv/nibrascv.pdf
       - name: Release PDF
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
-          files: cv/nibras.pdf
+          files: cv/nibrascv.pdf
           tag_name: latest
